@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 100" width="100%" height="100">
+  <g fill="#000000">
+    <!-- Garis Kiri -->
+    <line x1="50" y1="50" x2="280" y2="50" stroke="#000000" stroke-width="4" stroke-linecap="round" />
+    
+    <!-- Dua Belah Ketupat Kiri -->
+    <path d="M 310 42 L 318 50 L 310 58 L 302 50 Z" />
+    <path d="M 340 42 L 348 50 L 340 58 L 332 50 Z" />
+
+    <!-- Bintang Tengah (Proporsional & Elegan) -->
+    <path d="M 400 20 L 406 44 L 430 50 L 406 56 L 400 80 L 394 56 L 370 50 L 394 44 Z" />
+
+    <!-- Dua Belah Ketupat Kanan -->
+    <path d="M 460 42 L 468 50 L 460 58 L 452 50 Z" />
+    <path d="M 490 42 L 498 50 L 490 58 L 482 50 Z" />
+
+    <!-- Garis Kanan -->
+    <line x1="520" y1="50" x2="750" y2="50" stroke="#000000" stroke-width="4" stroke-linecap="round" />
+  </g>
+</svg>

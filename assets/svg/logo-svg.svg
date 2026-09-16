@@ -1,0 +1,133 @@
+<svg
+  id="logo-wrapper"
+  width="800"
+  height="1024"
+  viewBox="0 0 1536 1024"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="1536" height="1024" fill="#F7F7F8"/>
+
+  <g id="left-lines" opacity="0.85">
+    <line x1="90" y1="435" x2="260" y2="435" stroke="#9C8AB8" stroke-width="3" stroke-linecap="round"/>
+    <line x1="70" y1="460" x2="260" y2="460" stroke="#9C8AB8" stroke-width="3" stroke-linecap="round"/>
+    <line x1="45" y1="485" x2="260" y2="485" stroke="#9C8AB8" stroke-width="3" stroke-linecap="round"/>
+    <line x1="20" y1="510" x2="260" y2="510" stroke="#9C8AB8" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <text
+    id="title-top"
+    x="768"
+    y="390"
+    text-anchor="middle"
+    fill="#20275A"
+    font-size="220"
+    font-family="Cormorant Garamond, serif"
+    font-weight="600"
+    letter-spacing="3"
+  >
+    PUNCAK
+  </text>
+
+  <text
+    id="title-bottom"
+    x="768"
+    y="610"
+    text-anchor="middle"
+    fill="#242B63"
+    font-size="175"
+    font-family="Cormorant Garamond, serif"
+    font-weight="500"
+    letter-spacing="2"
+  >
+    YANG SEPI
+  </text>
+
+  <polygon
+    id="a-star"
+    points="920,305 928,322 945,330 928,338 920,355 912,338 895,330 912,322"
+    fill="#C5A0D9"
+  />
+
+  <g id="leaf-group">
+    <path
+      d="M1245 120 Q1265 90 1285 120 Q1265 150 1245 120Z"
+      fill="#B894BE"
+      opacity="0.85"
+      transform="rotate(-12 1265 120)"
+    />
+
+    <path
+      d="M1230 210 Q1260 160 1290 210 Q1260 260 1230 210Z"
+      fill="#C2A0C6"
+      opacity="0.85"
+      transform="rotate(-10 1260 210)"
+    />
+
+    <path
+      d="M1365 250 Q1395 225 1425 250 Q1395 275 1365 250Z"
+      fill="#C7A7CC"
+      opacity="0.85"
+      transform="rotate(12 1395 250)"
+    />
+
+    <path
+      d="M1270 335 Q1310 295 1350 335 Q1310 375 1270 335Z"
+      fill="#D2B2D7"
+      opacity="0.85"
+      transform="rotate(-8 1310 335)"
+    />
+  </g>
+
+  <g id="bottom-decoration">
+    <line
+      x1="360"
+      y1="760"
+      x2="710"
+      y2="760"
+      stroke="#B8AECF"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <line
+      x1="825"
+      y1="760"
+      x2="1175"
+      y2="760"
+      stroke="#B8AECF"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+
+    <polygon
+      points="768,735 778,752 796,760 778,768 768,785 758,768 740,760 758,752"
+      fill="#C5A0D9"
+    />
+  </g>
+
+  <text
+    x="768"
+    y="840"
+    text-anchor="middle"
+    fill="#4F4A67"
+    font-size="28"
+    font-family="Montserrat, sans-serif"
+    letter-spacing="12"
+  >
+    BERDIRI SENDIRI, MELANGKAH LEBIH TINGGI,
+  </text>
+
+  <text
+    x="768"
+    y="890"
+    text-anchor="middle"
+    fill="#4F4A67"
+    font-size="28"
+    font-family="Montserrat, sans-serif"
+    letter-spacing="12"
+  >
+    MESKI DUNIA TAK SELALU RAMAH.
+  </text>
+
+</svg>
