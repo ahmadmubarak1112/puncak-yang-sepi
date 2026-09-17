@@ -2,6 +2,18 @@ if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
 }
 
+///// PRELOAD ALL CHAR IMAGE
+function preloadCharacterImages() {
+
+    Object.values(chars).forEach((character) => {
+
+        const img = new Image();
+
+        img.src = character.images;
+
+    });
+
+}
 
 const preloader = document.querySelector(".preloader");
 const preloaderLogo = document.querySelector(".preloader svg");
@@ -109,6 +121,9 @@ gsap.set(secondText, {
 
 ///// RUN GSAP ANIMATION WHEN THE PAGE LOADS
 window.addEventListener("load", () => {
+
+    ///// CALL CHAR PRELOAD
+    preloadCharacterImages();
 
     ///// MOVE THE SCROLL TO THE BOTTOM HERO
     window.scrollTo( 0,getHeroBottom() );
@@ -445,41 +460,167 @@ let istransitioning = false;
 const kvThumbnail = document.querySelector(".kv-list");
 const keyVisualImgs = document.querySelectorAll(".kv-list img");
 
+const heroSources = Array.from(
+    keyVisualImgs,
+    (_, i) => `assets/img/hero/hero-${i + 1}.webp`
+);
+
+
+// ===========================
+// PRELOAD HERO
+// ===========================
+
+const heroPreloads = heroSources.map( (src) => {
+
+    const img = new Image();
+
+    img.src = src;
+
+    return img;
+
+});
+
 keyVisualImgs[0].classList.add("active");
 
-keyVisualImgs.forEach( (keyVisualImg, i) => {
-    
+keyVisualImgs.forEach((keyVisualImg, i) => {
+
     keyVisualImg.addEventListener("click", () => {
 
-        if( istransitioning ) return;
-        istransitioning = true;
 
-        kvThumbnail.classList.add("is-transitioning");
-        
-        ///// CHANGE THUMBNAIL STYLE WHILE IS CLICK
-        keyVisualImgs.forEach( (keyVisualImage) => keyVisualImage.classList.remove("active") );
+        // kalau sedang transisi, abaikan
+        if (istransitioning) return;
 
-        keyVisualImg.classList.add("active");
 
-        ///// CHANGE HERO WHILE THUMBNAIL IS CLICK
-        hero.style.filter = "brightness(0) contrast(0)";
+        // kalau hero yang sama diklik, abaikan
+        if (keyVisualImg.classList.contains("active")) return;
 
-        setTimeout( () => {
 
-            hero.style.backgroundImage = `url(assets/img/hero/hero-${(i + 1)}.webp)`;
-            hero.style.filter = "brightness(1) contrast(100%)";
+        const newHero = heroPreloads[i];
 
-            kvThumbnail.classList.remove("is-transitioning");
-        
-        }, 30);
 
-        setTimeout( () => {
+        // ===========================
+        // MULAI TRANSISI HERO
+        // ===========================
 
-            istransitioning = false;
+        function changeHero() {
 
-            kvThumbnail.classList.remove("is-transitioning");
+            istransitioning = true;
 
-        }, 830);
+            kvThumbnail.classList.add("is-transitioning");
+
+
+            // ===========================
+            // HERO LAMA MULAI MEMUDAR
+            // ===========================
+
+            hero.style.filter =
+                "brightness(0) contrast(0)";
+
+
+            /*
+                Jangan tunggu sampai fade-out selesai.
+
+                Kita hanya beri sedikit waktu supaya
+                hero lama mulai memudar.
+            */
+
+            setTimeout(() => {
+
+
+                // ===========================
+                // GANTI BACKGROUND
+                // ===========================
+
+                hero.style.backgroundImage =
+                    `url("${heroSources[i]}")`;
+
+
+                // ===========================
+                // UPDATE THUMBNAIL
+                // ===========================
+
+                keyVisualImgs.forEach((img) => {
+
+                    img.classList.remove("active");
+
+                });
+
+
+                keyVisualImg.classList.add("active");
+
+
+                /*
+                    Tunggu browser benar-benar memasang
+                    background baru sebelum filter kembali.
+                */
+
+                requestAnimationFrame(() => {
+
+                    requestAnimationFrame(() => {
+
+
+                        // ===========================
+                        // HERO BARU MUNCUL
+                        // ===========================
+
+                        hero.style.filter =
+                            "brightness(1) contrast(100%)";
+
+
+                    });
+
+                });
+
+
+            }, 60);
+
+
+            // ===========================
+            // TRANSISI SELESAI
+            // ===========================
+
+            setTimeout(() => {
+
+                istransitioning = false;
+
+                kvThumbnail.classList.remove(
+                    "is-transitioning"
+                );
+
+            }, 900);
+
+        }
+
+
+
+        // ===========================
+        // PASTIKAN HERO SUDAH READY
+        // ===========================
+
+        if (newHero.complete) {
+
+            if (newHero.decode) {
+
+                newHero
+                    .decode()
+                    .then(changeHero)
+                    .catch(changeHero);
+
+            } else {
+
+                changeHero();
+
+            }
+
+        } else {
+
+            newHero.addEventListener(
+                "load",
+                changeHero,
+                { once: true }
+            );
+
+        }
 
     });
 
@@ -711,7 +852,7 @@ const chars = {
 
     1: {
 
-        images: "assets/img/character/char/alya.png",
+        images: "assets/img/character/char/alya.webp",
         name: "Alya Hasanah",
         description: "Tokoh utama di serial ini, merupakan murid SMA Swasta Panah Hijau yang cantik dan pintar dan berprestasi, selalu menduduki ranking pertama sejak SMP. Selain itu, dia juga merupakan anak orang kaya."
 
@@ -719,7 +860,7 @@ const chars = {
 
     2: {
 
-        images: "assets/img/character/char/revan.png",
+        images: "assets/img/character/char/revan.webp",
         name: "Revan Nazario",
         description: "Tokoh utama di serial ini. Murid SMA Swasta Panah Hijau yang merupakan murid biasa yang bersifat kalem dan santai. Dia tidak terlalu suka keributan."
 
@@ -727,7 +868,7 @@ const chars = {
 
     3: {
 
-        images: "assets/img/character/char/zara.png",
+        images: "assets/img/character/char/zara.webp",
         name: "Zara Mikhaila",
         description: "Teman pertama Alya dan teman terdekat alya. Dia juga sering bergabung dengan kelompok Vina dan Annisa."
 
@@ -735,7 +876,7 @@ const chars = {
 
     4: {
 
-        images: "assets/img/character/char/rizky.png",
+        images: "assets/img/character/char/rizky.webp",
         name: "Rizky Saputra",
         description: "Teman dekat Revan yang berpostur tinggi dan atletis."
 
@@ -743,7 +884,7 @@ const chars = {
 
     5: {
 
-        images: "assets/img/character/char/vina.png",
+        images: "assets/img/character/char/vina.webp",
         name: "Vina Serliza",
         description: "Murid di kelas yang iri dan tidak terlalu suka ke Alya, dan cemburu jika Alya berdekatan dengan Revan."
 
@@ -751,7 +892,7 @@ const chars = {
 
     6: {
 
-        images: "assets/img/character/char/annisa.png",
+        images: "assets/img/character/char/annisa.webp",
         name: "Annisa Zahra",
         description: "Teman dekat Vina yang rajin menyapu kelas, memiliki sifat yang hampir mirip dengan Vina."
 
