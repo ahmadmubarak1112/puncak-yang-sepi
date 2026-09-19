@@ -460,16 +460,9 @@ let istransitioning = false;
 const kvThumbnail = document.querySelector(".kv-list");
 const keyVisualImgs = document.querySelectorAll(".kv-list img");
 
-const heroSources = Array.from(
-    keyVisualImgs,
-    (_, i) => `assets/img/hero/hero-${i + 1}.webp`
-);
+const heroSources = Array.from( keyVisualImgs, (_, i) => `assets/img/hero/hero-${i + 1}.webp` );
 
-
-// ===========================
-// PRELOAD HERO
-// ===========================
-
+///// PRELOAD HERO
 const heroPreloads = heroSources.map( (src) => {
 
     const img = new Image();
@@ -482,25 +475,17 @@ const heroPreloads = heroSources.map( (src) => {
 
 keyVisualImgs[0].classList.add("active");
 
+///// KEY VISUAL CLICK ACTION
 keyVisualImgs.forEach((keyVisualImg, i) => {
 
     keyVisualImg.addEventListener("click", () => {
 
-
-        // kalau sedang transisi, abaikan
         if (istransitioning) return;
 
-
-        // kalau hero yang sama diklik, abaikan
         if (keyVisualImg.classList.contains("active")) return;
-
 
         const newHero = heroPreloads[i];
 
-
-        // ===========================
-        // MULAI TRANSISI HERO
-        // ===========================
 
         function changeHero() {
 
@@ -508,36 +493,11 @@ keyVisualImgs.forEach((keyVisualImg, i) => {
 
             kvThumbnail.classList.add("is-transitioning");
 
-
-            // ===========================
-            // HERO LAMA MULAI MEMUDAR
-            // ===========================
-
-            hero.style.filter =
-                "brightness(0) contrast(0)";
-
-
-            /*
-                Jangan tunggu sampai fade-out selesai.
-
-                Kita hanya beri sedikit waktu supaya
-                hero lama mulai memudar.
-            */
+            hero.style.filter = "brightness(0) contrast(0)";
 
             setTimeout(() => {
 
-
-                // ===========================
-                // GANTI BACKGROUND
-                // ===========================
-
-                hero.style.backgroundImage =
-                    `url("${heroSources[i]}")`;
-
-
-                // ===========================
-                // UPDATE THUMBNAIL
-                // ===========================
+                hero.style.backgroundImage = `url("${heroSources[i]}")`;
 
                 keyVisualImgs.forEach((img) => {
 
@@ -545,61 +505,33 @@ keyVisualImgs.forEach((keyVisualImg, i) => {
 
                 });
 
-
                 keyVisualImg.classList.add("active");
-
-
-                /*
-                    Tunggu browser benar-benar memasang
-                    background baru sebelum filter kembali.
-                */
 
                 requestAnimationFrame(() => {
 
                     requestAnimationFrame(() => {
 
-
-                        // ===========================
-                        // HERO BARU MUNCUL
-                        // ===========================
-
-                        hero.style.filter =
-                            "brightness(1) contrast(100%)";
-
+                        hero.style.filter = "brightness(1) contrast(100%)";
 
                     });
 
                 });
 
-
             }, 60);
-
-
-            // ===========================
-            // TRANSISI SELESAI
-            // ===========================
 
             setTimeout(() => {
 
                 istransitioning = false;
 
-                kvThumbnail.classList.remove(
-                    "is-transitioning"
-                );
+                kvThumbnail.classList.remove("is-transitioning");
 
             }, 900);
 
         }
 
+        if( newHero.complete ) {
 
-
-        // ===========================
-        // PASTIKAN HERO SUDAH READY
-        // ===========================
-
-        if (newHero.complete) {
-
-            if (newHero.decode) {
+            if( newHero.decode ) {
 
                 newHero
                     .decode()
@@ -614,11 +546,7 @@ keyVisualImgs.forEach((keyVisualImg, i) => {
 
         } else {
 
-            newHero.addEventListener(
-                "load",
-                changeHero,
-                { once: true }
-            );
+            newHero.addEventListener("load", changeHero, { once: true });
 
         }
 
